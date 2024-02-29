@@ -17,18 +17,19 @@ import {
 const Tab = createBottomTabNavigator();
 
 const TAB_ICON = {
-  Restaurants: "md-restaurant",
-  Map: "md-map",
-  Settings: "md-settings",
+  Restaurants: "restaurant-outline",
+  Map: "map-outline",
+  Settings: "cog-outline",
 };
-const tabBarIcon = ({size,color}) => <Ionicons name={iconName} size={size} color={color} />;
+
+const tabBarIcon = ({ size, color, route }) => {
+  const iconName = TAB_ICON[route.name];
+  return <Ionicons name={iconName} size={size} color={color} />;
+};
 
 const createScreenOptions = ({ route }) => {
-  const iconName = TAB_ICON[route.name];
   return {
-    tabBarIcon: ({ size, color }) => (
-      <Ionicons name={iconName} size={size} color={color} />
-    ),
+    tabBarIcon: ({ size, color }) => tabBarIcon({ size, color, route }),
   };
 };
 
@@ -37,6 +38,7 @@ const Settings = () => (
     <Text>Settings</Text>
   </SafeArea>
 );
+
 const Map = () => (
   <SafeArea>
     <Text>Map</Text>
@@ -54,13 +56,14 @@ export default function App() {
   if (!oswaldLoaded || !latoLoaded) {
     return null;
   }
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
           <Tab.Navigator screenOptions={createScreenOptions}>
             <Tab.Screen name="Restaurants" component={RestaurantsScreen} />
-            <Tab.Screen name="Maps" component={Map} />
+            <Tab.Screen name="Map" component={Map} />
             <Tab.Screen name="Settings" component={Settings} />
           </Tab.Navigator>
         </NavigationContainer>
