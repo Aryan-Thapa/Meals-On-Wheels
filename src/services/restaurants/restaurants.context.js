@@ -3,7 +3,6 @@ import React, {
   useContext,
   createContext,
   useEffect,
-  useMemo,
 } from "react";
 import {
   restaurantsRequest,
