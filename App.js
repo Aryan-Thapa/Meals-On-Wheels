@@ -11,39 +11,9 @@ import {
 } from "@expo-google-fonts/oswald";
 import { Navigation } from "./src/infrastructure/navigation";
 import { FavouritesContextProvider } from "./src/services/favourites/favourites.context";
-import { initializeApp } from "firebase/app";
-import { FirebaseApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDN1aqJ-JhR-b_DNuuqJsKMI7mDzVXLAN8",
-  authDomain: "meals-on-wheels-9317f.firebaseapp.com",
-  projectId: "meals-on-wheels-9317f",
-  storageBucket: "meals-on-wheels-9317f.appspot.com",
-  messagingSenderId: "581735937926",
-  appId: "1:581735937926:web:aada17873d4dffdfb0de07",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      signInWithEmailAndPassword(auth, "aryan@gmail.com", "test123")
-        .then((userCredential) => {
-          // User successfully signed in
-          setIsAuthenticated(true);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-        });
-    }, 2000);
-  }, []);
   const [oswaldLoaded] = useOswald({
     Oswald_400Regular,
   });
@@ -53,17 +23,18 @@ export default function App() {
   if (!oswaldLoaded || !latoLoaded) {
     return null;
   }
-
   return (
     <>
       <ThemeProvider theme={theme}>
-        <FavouritesContextProvider>
-          <LocationContextProvider>
-            <RestaurantsContextProvider>
-              <Navigation />
-            </RestaurantsContextProvider>
-          </LocationContextProvider>
-        </FavouritesContextProvider>
+        <AuthenticationContextProvider>
+          <FavouritesContextProvider>
+            <LocationContextProvider>
+              <RestaurantsContextProvider>
+                <Navigation />
+              </RestaurantsContextProvider>
+            </LocationContextProvider>
+          </FavouritesContextProvider>
+        </AuthenticationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
