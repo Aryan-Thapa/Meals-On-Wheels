@@ -3,5 +3,5 @@ import styled from "styled-components/native";
 import { CompactRestaurantInfo } from "../../../components/restaurant/compact-restaurant-info.component";
 
 export const MapCallout = ({ restaurant }) => (
-  <CompactRestaurantInfo restaurant={restaurant} />
+  <CompactRestaurantInfo isMap restaurant={restaurant} />
 );
