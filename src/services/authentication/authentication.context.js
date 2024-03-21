@@ -1,7 +1,9 @@
 import React, { useState, createContext } from "react";
-
-import { loginRequest } from "./authentication.service";
-import { registerRequest } from "./authentication.service";
+import {
+  loginRequest,
+  registerRequest,
+  signOutRequest,
+} from "./authentication.service";
 
 export const AuthenticationContext = createContext();
 
@@ -40,6 +42,12 @@ export const AuthenticationContextProvider = ({ children }) => {
       });
   };
 
+  const onLogout = () => {
+    setUser(null);
+    setError(null);
+    signOutRequest();
+  };
+
   return (
     <AuthenticationContext.Provider
       value={{
@@ -49,6 +57,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         error,
         onLogin,
         onRegister,
+        onLogout,
       }}
     >
       {children}
