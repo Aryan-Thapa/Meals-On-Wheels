@@ -1,28 +1,52 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback, useState } from "react";
+import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 import { List, Avatar } from "react-native-paper";
 import { Text } from "../../../components/typography/text.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { SafeArea } from "../../../components/utility/safe-area.component";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
-
 const SettingsItem = styled(List.Item)`
   padding: ${(props) => props.theme.space[3]};
 `;
 const AvatarContainer = styled.View`
   align-items: center;
 `;
-
 export const SettingsScreen = ({ navigation }) => {
   const { onLogout, user } = useContext(AuthenticationContext);
+  const [photo, setPhoto] = useState(null);
+  const getProfilePicture = async (currentUser) => {
+    const photoUri = await AsyncStorage.getItem(`${currentUser.uid}-photo`);
+    setPhoto(photoUri);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getProfilePicture(user);
+    }, [user])
+  );
+
   return (
     <SafeArea>
       <AvatarContainer>
-        <Avatar.Image
-          size={250}
-          backgroundColor="#2182BD"
-          source={require("../../../../assets/avatar2.png")}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
+          {!photo && (
+            <Avatar.Image
+              size={250}
+              backgroundColor="#2182BD"
+              source={require("../../../../assets/avatar2.png")}
+            />
+          )}
+          {photo && (
+            <Avatar.Image
+              size={180}
+              source={{ uri: photo }}
+              backgroundColor="#2182BD"
+            />
+          )}
+        </TouchableOpacity>
         <Spacer position="top" size="large">
           <Text variant="label">{user.email}</Text>
         </Spacer>
