@@ -3,22 +3,6 @@ Meals-On-Wheels - Real-Time Food Delivery App
 Overview
 Meals-On-Wheels is a mobile application designed to revolutionize the food delivery experience by incorporating local hawkers into the digital marketplace. The app connects users with nearby restaurants and mobile hawkers, allowing hawkers to dynamically plan their routes and provide users with real-time, localized food options.
 
-Features
-Hawker Support System:
-Hawkers can plan and adjust their routes in real-time.
-Live GPS tracking for hawkers to enhance visibility.
-
-User Notifications:
-Users receive push notifications about hawker routes and promotions.
-Instant alerts when a hawker is in their vicinity.
-
-Dynamic Ordering:
-Users can interact with notifications to view hawker details and menus.
-Seamless in-app ordering with secure payment processing.
-
-User Feedback:
-Users can provide feedback and ratings, contributing to continuous improvement.
-
 Technology Stack
 
 Frontend:
